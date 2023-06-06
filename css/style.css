@@ -90,7 +90,7 @@
     position: absolute;
     top: 60px;
     right: 60px;
-    background: white;
+    background: var(--white);
     width: 100px;
     height: auto;
     border: 1px solid var(--very-light-pink);
@@ -130,8 +130,11 @@
   .mobile-menu {
     position: absolute;
     top: 60px;
+    left: 0;
     padding: 24px;
-    background: white;
+    width: calc(100% - 24px);
+    background: var(--white);
+    
   }
   .mobile-menu a {
     text-decoration: none;
@@ -168,7 +171,7 @@
     box-sizing: border-box;
     position: absolute;
     right: 0;
-    background: white;
+    background: var(--white);
   }
   .title-container {
     display: flex;
