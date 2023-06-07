@@ -4,23 +4,32 @@ const mobileMenu  = document.querySelector('.mobile-menu')
 const menuHamIcon = document.querySelector('.menu')
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart')
 const shoppingCarContainer = document.querySelector('#shoppingCarContainer')
+const productDitailContainer = document.querySelector('#productDetail')
+const productDetailClose = document.querySelector('.product-detail-close')
 
 emailMenu.addEventListener('click', toggleDesktopMenu)
 menuHamIcon.addEventListener('click', toogleMobileMenu)
 menuCarritoIcon.addEventListener('click', toogleCarritoMenu)
+productDetailClose.addEventListener('click', toogleProductDetail)
 
+function toogleProductDetail(){
+    productDitailContainer.classList.add('inactive')
+}
 
 function toggleDesktopMenu(){
-    shoppingCarContainer.classList.add('inactive')
+   productDitailContainer.classList.add('inactive') 
+   shoppingCarContainer.classList.add('inactive')
    desktopMenu.classList.toggle('inactive')
 }
 
 function toogleMobileMenu(){
+    productDitailContainer.classList.add('inactive')
     shoppingCarContainer.classList.add('inactive')
     mobileMenu.classList.toggle('inactive')     
 }
 
 function toogleCarritoMenu(){
+    productDitailContainer.classList.add('inactive') 
     desktopMenu.classList.add('inactive')
     mobileMenu.classList.add('inactive')
     shoppingCarContainer.classList.toggle('inactive')
@@ -54,6 +63,7 @@ function renderProducts(arr){
         
         const cardImage = document.createElement('img')
         cardImage.setAttribute('src',product.image)
+        cardImage.addEventListener('click', showDetailProduct)
         
         const productInfo = document.createElement('div')
         productInfo.classList.add('product-info')
@@ -78,10 +88,13 @@ function renderProducts(arr){
         productCard.appendChild(cardImage)
         productCard.appendChild(productInfo)
         containerProducts.appendChild(productCard)
-
     }
+}
 
-    
+function showDetailProduct(){
+    shoppingCarContainer.classList.add('inactive')
+    mobileMenu.classList.add('inactive')
+    productDitailContainer.classList.remove('inactive')
 }
 
 renderProducts(productList)
