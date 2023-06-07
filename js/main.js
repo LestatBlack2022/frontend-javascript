@@ -3,7 +3,7 @@ const desktopMenu = document.querySelector('.desktop-menu')
 const mobileMenu  = document.querySelector('.mobile-menu')
 const menuHamIcon = document.querySelector('.menu')
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart')
-const productDetail = document.querySelector('.product-detail')
+const shoppingCarContainer = document.querySelector('#shoppingCarContainer')
 
 emailMenu.addEventListener('click', toggleDesktopMenu)
 menuHamIcon.addEventListener('click', toogleMobileMenu)
@@ -11,19 +11,19 @@ menuCarritoIcon.addEventListener('click', toogleCarritoMenu)
 
 
 function toggleDesktopMenu(){
-   productDetail.classList.add('inactive')
+    shoppingCarContainer.classList.add('inactive')
    desktopMenu.classList.toggle('inactive')
 }
 
 function toogleMobileMenu(){
-    productDetail.classList.add('inactive')
+    shoppingCarContainer.classList.add('inactive')
     mobileMenu.classList.toggle('inactive')     
 }
 
 function toogleCarritoMenu(){
     desktopMenu.classList.add('inactive')
     mobileMenu.classList.add('inactive')
-    productDetail.classList.toggle('inactive')
+    shoppingCarContainer.classList.toggle('inactive')
 }
 
 const containerProducts = document.querySelector('.cards-container')
