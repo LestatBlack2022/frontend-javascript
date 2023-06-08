@@ -14,7 +14,7 @@
   }
 
   .inactive {
-    display: none;
+    display: none;  
   }
 
 
@@ -134,7 +134,6 @@
     padding: 24px;
     width: calc(100% - 24px);
     background: var(--white);
-    
   }
   .mobile-menu a {
     text-decoration: none;

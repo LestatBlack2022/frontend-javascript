@@ -36,25 +36,7 @@ function toogleCarritoMenu(){
 }
 
 const containerProducts = document.querySelector('.cards-container')
-const productList = []
 
-productList.push({
-    name: 'Bike',
-    price: 120,
-    image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-})
-
-productList.push({
-    name: 'Computer',
-    price: 110,
-    image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-})
-
-productList.push({
-    name: 'Monitor',
-    price: 160,
-    image: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-})
 
 function renderProducts(arr){
     for (product of arr){
@@ -94,7 +76,33 @@ function renderProducts(arr){
 function showDetailProduct(){
     shoppingCarContainer.classList.add('inactive')
     mobileMenu.classList.add('inactive')
+    desktopMenu.classList.add('inactive')
     productDitailContainer.classList.remove('inactive')
 }
 
-renderProducts(productList)
+function getProductList(){
+    let url = "https://practica.liax.com.mx/imagenes.php"
+
+    fetch(url)
+        .then((resp) => resp.json())
+        .then(function(data) {
+            const productList = []
+
+            for (product of data) {
+                productList.push({
+                    name: product.nombre,
+                    price: product.precio,
+                    image: product.imagen,
+                    description: product.descripcion        
+                })
+            }
+            
+            renderProducts(productList)
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+
+getProductList()
+
