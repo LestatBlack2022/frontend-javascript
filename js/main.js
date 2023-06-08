@@ -5,12 +5,15 @@ const menuHamIcon = document.querySelector('.menu')
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart')
 const shoppingCarContainer = document.querySelector('#shoppingCarContainer')
 const productDitailContainer = document.querySelector('#productDetail')
-const productDetailClose = document.querySelector('.product-detail-close')
+const containerProducts = document.querySelector('.cards-container')
+
 
 emailMenu.addEventListener('click', toggleDesktopMenu)
 menuHamIcon.addEventListener('click', toogleMobileMenu)
 menuCarritoIcon.addEventListener('click', toogleCarritoMenu)
-productDetailClose.addEventListener('click', toogleProductDetail)
+const productList = []
+
+
 
 function toogleProductDetail(){
     productDitailContainer.classList.add('inactive')
@@ -35,13 +38,11 @@ function toogleCarritoMenu(){
     shoppingCarContainer.classList.toggle('inactive')
 }
 
-const containerProducts = document.querySelector('.cards-container')
-
-
 function renderProducts(arr){
     for (product of arr){
         const productCard = document.createElement('div')
         productCard.classList.add('product-card')
+        productCard.setAttribute('data-sku', product.id)
         
         const cardImage = document.createElement('img')
         cardImage.setAttribute('src',product.image)
@@ -78,22 +79,63 @@ function showDetailProduct(){
     mobileMenu.classList.add('inactive')
     desktopMenu.classList.add('inactive')
     productDitailContainer.classList.remove('inactive')
+    productDitailContainer.innerHTML = ''
+
+    /*Se obtiene el indentificado del producto seleccionado*/
+    const productSku = this.parentElement.getAttribute('data-sku')
+    const productSearch = productList.filter(function (producto) { return producto.id == productSku; })
+
+    /*Se crea el elemento dinamico a partir de ProductList*/
+    const productDetailClose = document.createElement('div')
+    productDetailClose.classList.add('product-detail-close')
+    const productDetailCloseImg = document.createElement('img')
+    productDetailCloseImg.setAttribute('src', '/icons/icon_close.png')
+    productDetailClose.appendChild(productDetailCloseImg)
+    productDetailClose.addEventListener('click', toogleProductDetail)
+
+    const productDitailContainerImg = document.createElement('img')
+    productDitailContainerImg.setAttribute('src', productSearch[0].image)
+    
+    const productDetailProductInfo = document.createElement('div')
+    productDetailProductInfo.classList.add('product-info') 
+    
+    const productDetailProductInfoPrice = document.createElement('p')
+    productDetailProductInfoPrice.innerText = '$' + productSearch[0].price
+    
+    const productDetailProductInfoName = document.createElement('p')
+    productDetailProductInfoName.innerText = productSearch[0].name
+    
+    const productDetailProductInfoDescripcion = document.createElement('p')
+    productDetailProductInfoDescripcion.innerText = productSearch[0].description
+
+    productDetailProductInfo.appendChild(productDetailProductInfoPrice)
+    productDetailProductInfo.appendChild(productDetailProductInfoName)
+    productDetailProductInfo.appendChild(productDetailProductInfoDescripcion)
+
+    const productDetailProductInfoButton = document.createElement('button')
+    productDetailProductInfoButton.classList.add('primary-button','add-to-cart-button') 
+    productDetailProductInfoButton.innerText = 'Add to cart'
+
+    productDitailContainer.appendChild(productDetailClose)
+    productDitailContainer.appendChild(productDitailContainerImg)
+    productDitailContainer.appendChild(productDetailProductInfo)
+    productDitailContainer.appendChild(productDetailProductInfoButton)  
 }
 
-function getProductList(){
+function getProductList(productList){
     let url = "https://practica.liax.com.mx/imagenes.php"
 
     fetch(url)
         .then((resp) => resp.json())
         .then(function(data) {
-            const productList = []
 
             for (product of data) {
                 productList.push({
                     name: product.nombre,
                     price: product.precio,
                     image: product.imagen,
-                    description: product.descripcion        
+                    description: product.descripcion,
+                    id: product.id_registro        
                 })
             }
             
@@ -104,5 +146,5 @@ function getProductList(){
     });
 }
 
-getProductList()
+getProductList(productList)
 
